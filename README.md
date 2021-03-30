@@ -12,13 +12,12 @@ ProLint is a lightweight python library that has four core objectives:
 To get familiar with ProLint please read the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a>.
 ## Installation
 
-Getting `ProLint` is quite simple, especially if you have `conda` installed. Make sure to install 
-`mdtraj` *v1.9.2* first: 
+Getting `ProLint` is quite simple, especially if you have `conda` installed. 
 
 ```sh
 # create new environment
 conda create --name prolint python=3.7
-conda install -c conda-forge mdtraj=1.9.2
+conda install -c conda-forge mdtraj
 ```
 and then install `ProLint` using `pip`: 
 ```sh
@@ -32,7 +31,7 @@ If you want to install directly from the github repository then you can do that 
 # create new environment
 conda create --name prolint python=3.7
 # install dependencies
-conda install -c conda-forge numpy==1.15.4 pandas==0.24.0 mdtraj==1.9.2 scipy pyyaml colorcet bokeh==1.4.0 networkx nglview==2.7.7 matplotlib jupyterlab
+conda install -c conda-forge numpy pandas==0.24.0 mdtraj scipy pyyaml colorcet bokeh==1.4.0 networkx nglview==2.7.7 matplotlib jupyterlab
 ```
 
 After that, you clone this directory and install it, using: 
