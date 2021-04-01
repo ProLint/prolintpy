@@ -772,7 +772,7 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
         # res_indices = df['resSeq'].drop_duplicates().index
         # resnames = df.iloc[res_indices].resName.to_numpy()
 
-        for residue in residues:
+        for res_idx, residue in enumerate(residues):
             for k, v in metrics.items():
                 if k == 'occ':
                     con = retrieve_contacts(n, residue, protein=protein, contacts='occupancy')
@@ -799,6 +799,6 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
                         RESULTS["Lipids"].append(lipid)
                         RESULTS["Radius"].append(float(radius))
                         RESULTS["ResID"].append(residue)
-                        RESULTS['ResName'].append(resnames[residue-1])
+                        RESULTS['ResName'].append(resnames[res_idx])
 
     return pd.DataFrame(RESULTS).sort_values(['Protein', 'Lipids', 'ResID']).reset_index(drop=True)
