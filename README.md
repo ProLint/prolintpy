@@ -2,20 +2,20 @@
 A python package for the automated analysis and visualization of **Pro**tein-**L**ipid **int**eractions.
 
 
-prolintpy is a lightweight python library that is used by the ProLint webserver on the backend. 
+prolintpy is a lightweight python library that is used by the ProLint webserver on the backend. This package was called prolint, but we changed the name so that it is not confused with the webserver name. 
 
 To get familiar with it please read the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a>, but please note that currently it is a bit outdated as we are in the process of migrating all libraries to this GitHub page. 
 
 ## Installation (To get the latest version, please install from source)! 
 
-Getting `ProLint` is quite simple, especially if you have `conda` installed. 
+Getting `prolintpy` is quite simple, especially if you have `conda` installed. 
 
 ```sh
 # create new environment
 conda create --name prolint python=3.7
 conda install -c conda-forge mdtraj
 ```
-and then install `ProLint` using `pip`: 
+and then install `prolintpy` using `pip`: 
 ```sh
 python -m pip install prolint 
 ```
@@ -40,7 +40,7 @@ python setup.py install
 
 ## Getting Started (docs are a bit outdated!) 
 
-Please follow the instructions provided in the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of ProLint, 
+Please follow the instructions provided in the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of prolintpy, 
 you should use JupyterLab. At the top of your notebook file, make sure to call the `output_notebook` function: 
 
 ```python
@@ -52,7 +52,7 @@ Additionally, if you want to use the `show_contact_projection` function, make su
 Follow the instruction provided <a href="https://github.com/nglviewer/nglview" target="_blank">there</a> to ensure your installation is running correclty.
 
 ## Data Files
-Before you load the data to ProLint make sure to first remove water & ions beads. Leave only membrane and protein beads in the system. 
+Before you load the data to prolintpy make sure to first remove water & ions beads. Leave only membrane and protein beads in the system. 
 
 ## Notes
 This library has been tested with the Martini model. It should work with atomistic simulations quite well, however testing so far has been very limited. 
