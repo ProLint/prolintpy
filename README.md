@@ -1,15 +1,11 @@
-# ProLint
+# prolintpy
 A python package for the automated analysis and visualization of **Pro**tein-**L**ipid **int**eractions.
 
 
-ProLint is a lightweight python library that has four core objectives:
-* Powerful and customizable analysis of protein-lipid contacts
-* Allow for quick and easy insight into simulation data
-* Increase data sharing and accessibility
-* Automation of protein-lipid contact generation
+prolintpy is a lightweight python library that is used by the ProLint webserver on the backend. 
 
+To get familiar with it please read the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a>, but please note that currently it is a bit outdated as we are in the process of migrating all libraries to this GitHub page. 
 
-To get familiar with ProLint please read the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a>.
 ## Installation (To get the latest version, please install from source)! 
 
 Getting `ProLint` is quite simple, especially if you have `conda` installed. 
