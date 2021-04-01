@@ -10,7 +10,7 @@ ProLint is a lightweight python library that has four core objectives:
 
 
 To get familiar with ProLint please read the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a>.
-## Installation
+## Installation (To get the latest version, please install from source)! 
 
 Getting `ProLint` is quite simple, especially if you have `conda` installed. 
 
@@ -42,7 +42,7 @@ cd prolint
 python setup.py install
 ```
 
-## Getting Started
+## Getting Started (docs are a bit outdated!) 
 
 Please follow the instructions provided in the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of ProLint, 
 you should use JupyterLab. At the top of your notebook file, make sure to call the `output_notebook` function: 
