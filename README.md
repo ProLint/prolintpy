@@ -3,6 +3,7 @@
 
 
 <p align="center">
+<a href="https://gitter.im/ProLint/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge"><img src="https://badges.gitter.im/ProLint/community.svg"><a/>
 <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 <a href="https://github.com/ProLint/prolintpy/releases"><img src="https://img.shields.io/github/v/release/ProLint/prolintpy.svg"></a>
 </p>
