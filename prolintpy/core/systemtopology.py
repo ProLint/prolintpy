@@ -274,12 +274,9 @@ class Proteins(SystemTopology):
             li = values[1]
 
             # Get the data for the current protein.
-            print (fi, li)
-            print ()
             current_protein_df = self.pdf[(self.pdf.index >= fi) & (self.pdf.index <= li)]
             curr_len = len(current_protein_df[current_protein_df.name == ref_atom])
 
-            print (curr_len)
             # curr_len = len(current_protein_df)
             curr_names = current_protein_df.name.to_list()
 
@@ -293,16 +290,12 @@ class Proteins(SystemTopology):
 
             if new_protein:
                 protein = Protein(f'Protein{c}')
-                print (protein)
                 protein.dataframe.append(current_protein_df.copy())
                 protein.beads = curr_names
                 protein.n_residues = curr_len
                 protein.residues = current_protein_df.resSeq.unique()
 
-                # res_indices = current_protein_df.resSeq.drop_duplicates().index
                 resnames = current_protein_df[current_protein_df.name == ref_atom].resName.to_numpy()
-                # print (res_indices)
-                # resnames = current_protein_df.iloc[res_indices].resName.to_numpy()
                 protein.resnames = resnames
 
                 protein.first_residue = current_protein_df.resSeq.to_list()[0]
