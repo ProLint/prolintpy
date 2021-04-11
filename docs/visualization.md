@@ -19,7 +19,7 @@ output_notebook()
 ```
 
 
-### A scatter plot of data points
+### Point distribution
 
 Once you have build a pandas DataFrame from the calculated contacts (by, for instance, running the `contacts_dataframe()` function),
 you can provide it as input to the appropriate `prolintpy` visualization apps:
@@ -55,9 +55,40 @@ for the visualization:
 A very important (perhaps the most important?) calculation that is commonly done in lipid-protein interaction studies is measuring the
 distance between a residue and a lipid as a function of simulation time. This gives you a clear idea if the
 lipid is interacting preferentially with a residue or not. `prolintpy` provides two different ways to get distance information on
-lipid-protein interactions.
+lipid-protein interactions. The first method, presented in this section, is automated and relies on the prior calculation of contact-based metrics.
 
-Calculate distances between lipids and residues without needing any contact-based metrics. Given a list of input residues,
+The way it works is that it goes through the calculated metrics, sorts them, and gets the top-ranking residues and lipids. It then goes over each
+residue and lipid combination and gets the best/strongest contact (that is, the contact that is maintained most strongly between the specific residue and lipid).
+
+Here is an example application:
+
+```python
+from prolintpy.core.computecontacts import retrieve_distances
+
+# Note that the only calculated value needed is the contacts dataframe.
+# The other arguments are simply definitions about your system.
+distances_dict, SYSTEM_LIPIDS, lipids_found = retrieve_distances(protein_dataframe, group_lipids=False, resolution="martini", lipids=lipids, top_nr=30)
+distances = contacts.compute_lipid_distances(t, proteins[0], distances_dict, SYSTEM_LIPIDS, lipids_found)
+
+# Visualize results
+pl.show_metric_distances(distances)
+```
+
+Note that the `top_nr` argument specifies the number of top ranking results based on contact-metrics to consider. You can increase it to get a larger pool of interactions.<br>
+This will visualize contacts found using the following application:
+
+<img src="assets/images/mdistances.png"></img>
+
+Note how you can change the Lipid Selected and this will update the list in the Residue Selection dropdown. Similarly, if you have multiple proteins in your
+system, the values displayed will be grouped acording to the protein copy. Note that if you did not merge proteins, you need to undo that. See here:
+https://github.com/ProLint/ProLint/blob/main/prolint/calcul/tasks.py#L141 for more information on how this is done.
+
+### Distance calculations 2
+
+The second way `prolintpy` calculates and visualizes distances is by not relying on any prior calcualted metrics. Instead, you simply supply the protein
+and list of residues along with threshold arguments, and `prolintpy` will then calculate distance measurements.
+
+Given a list of input residues,
 this function will loop through all the lipids in the system and display distances with best ranking lipids. Ranking is decided
 based on the following parameters:
 
@@ -79,6 +110,8 @@ You'll get an output like the following (note that the actual application also h
 
 <img src="assets/images/distance.png"></img>
 
+Note how you may and usually will, get multiple lipids satisfying the threshold parameters. This is a really cool way to visualize interactions along
+long duration of the trajectory and observe many lipid binding and unbinding events.
 
 ### Heatmap & Density Viewer
 
