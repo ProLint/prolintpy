@@ -1,10 +1,16 @@
-# prolintpy
-A python package for the automated analysis and visualization of **Pro**tein-**L**ipid **int**eractions.
+<h3 align="center"><img src="https://i.imgur.com/b4e1eTm.png" alt="logo" height="200px"></h3>
+<p align="center">A python package for the automated analysis and visualization of lipid-protein interactions.</p>
 
 
-prolintpy is a lightweight python library that is used by the ProLint webserver on the backend. Use this tool if you want to customize analysis and visualization of lipid-protein interactions and want to scale-up your workflow beyond the capabilities of the <a href="https://prolint.ca" target="_blank">ProLint webserver</a>. 
+<p align="center">
+<a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+<a href="https://github.com/dylanaraps/neofetch/releases"><img src="https://img.shields.io/github/v/release/ProLint/prolintpy.svg"></a>
+</p>
 
-To get familiar with **prolintpy** please read the <a href="https://prolint.github.io/prolintpy" target="_blank">documentation</a>. 
+
+prolintpy is a lightweight python library that is used by the ProLint webserver on the backend to analyze **Pro**tein-**L**ipid **int**eractions.. Use this tool if you want to customize analysis and visualization of lipid-protein interactions and want to scale-up your workflow beyond the capabilities of the <a href="https://prolint.ca" target="_blank">ProLint webserver</a>. 
+
+To get familiar with **prolintpy** please read the <a href="https://prolint.github.io/prolintpy" target="_blank">Documentation</a>. 
 
 ## Installation 
 
