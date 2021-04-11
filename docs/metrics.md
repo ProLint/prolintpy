@@ -100,7 +100,7 @@ compute_neighbors call.
 
 ```python
 result = contacts.compute_neighbors(t)
-df = pl.contacts_dataframe(result, proteins, t)
+df = pl.contacts_dataframe(result, proteins, t, radius=0.7)
 print (df.head())
 >
 ```
