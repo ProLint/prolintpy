@@ -4,7 +4,7 @@
 
 <p align="center">
 <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-<a href="https://github.com/dylanaraps/neofetch/releases"><img src="https://img.shields.io/github/v/release/ProLint/prolintpy.svg"></a>
+<a href="https://github.com/ProLint/prolintpy/releases"><img src="https://img.shields.io/github/v/release/ProLint/prolintpy.svg"></a>
 </p>
 
 
