@@ -66,6 +66,3 @@ Follow the instruction provided <a href="https://github.com/nglviewer/nglview" t
 ## Data Files
 Before you load the data to prolintpy make sure to first remove water & ions beads. Leave only membrane and protein beads in the system.
 
-## Notes
-This library has been tested with the Martini model. It should work with atomistic simulations quite well, however testing so far has been very limited.
-During the following weeks we'll continue updating the library as well as adding & improving its functionality.
