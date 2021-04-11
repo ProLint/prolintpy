@@ -1,4 +1,4 @@
-<h3 align="center"><img src="https://i.imgur.com/b4e1eTm.png" alt="logo" height="200px"></h3>
+<h3 align="center"><img src="https://i.imgur.com/HomQmrp.png" alt="logo" height="200px"></h3>
 <p align="center">A python package for the automated analysis and visualization of lipid-protein interactions.</p>
 
 
