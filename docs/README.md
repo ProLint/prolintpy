@@ -20,35 +20,34 @@ TLDR: you can use `prolintpy` for the following:
 
 ## Installation
 
-Getting `prolintpy` is simple, especially if you have `conda` installed.
+To install `prolintpy` simply execute: 
+
+```sh
+python -m pip install prolintpy
+```
+
+This should work on most systems.
+On Windows and even WSL 1, MDTraj may present a problem to install. In that case, you may want to use `conda` to 
+install MDTraj first: 
 
 ```sh
 # create new environment
 conda create --name prolint python=3.7
 conda install -c conda-forge mdtraj
-```
-and then install `prolintpy` using `pip`:
-```sh
-python -m pip install prolint
+python -m pip install prolintpy
 ```
 
 ### Installing from source
-If you want to install directly from the github repository then you can do that by typing:
+
+If you want to install directly from the github repository then you can do that by typing: 
 
 ```sh
-# create new environment
-conda create --name prolint python=3.7
-# install dependencies
-conda install -c conda-forge numpy pandas==0.24.0 mdtraj scipy pyyaml colorcet bokeh==1.4.0 networkx nglview==2.7.7 matplotlib jupyterlab
-```
-
-After that, you clone this directory and install it, using:
-
-```sh
-git clone https://github.com/bisejdiu/prolint.git
-cd prolint
+git clone https://github.com/ProLint/prolintpy.git
+cd prolintpy
 python setup.py install
 ```
+
+If you are using Windows, the same thing mentioned above applies. 
 
 ## Getting Started
 
