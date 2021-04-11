@@ -1,7 +1,7 @@
 # prolintpy
 prolintpy is a lightweight python library that aimes to automate the analysis and visualization of **Pro**tein-**L**ipid **int**eractions.
 
-The main goal and purpose of all the tools that are distributed as part of the <a href="https://prolint.readthedocs.io" target="_blank">ProLint</a> framework is
+The main goal and purpose of all the tools that are distributed as part of the <a href="https://prolint.ca" target="_blank">ProLint</a> framework is
 to bridge this widening gap between **data generation** and **gaining insight** on biologically-relevant interactions between lipids and proteins.
 
 prolintpy is the library that the ProLint webserver uses on the backend to automate topology generation and analysis of lipid-protein interactions. Please note, however, that
@@ -52,7 +52,7 @@ python setup.py install
 
 ## Getting Started
 
-Please follow the instructions provided in the <a href="https://prolint.readthedocs.io" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of prolintpy,
+Please follow the instructions provided in the <a href="https://prolint.github.io/prolintpy" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of prolintpy,
 you should use JupyterLab. At the top of your notebook file, make sure to call the `output_notebook` function:
 
 ```python
