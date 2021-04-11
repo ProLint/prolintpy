@@ -29,9 +29,6 @@ def show_distances(distances, norm_factor=1000000):
         Default is 1000000 and will convert picoseconds to microseconds.
 
     """
-    # global RESVALUE
-    # global df, meta
-    # RESVALUE = {}
 
     output_notebook()
 
@@ -41,21 +38,11 @@ def show_distances(distances, norm_factor=1000000):
 
         residues = list(distances.keys())
         df, meta = distances[residues[0]]
-        # df = df_og.copy()
-        # del df_og
         residues = [str(x) for x in residues]
 
-        # df['Time'] = df['Time'] / norm_factor
         time = df['Time'].to_list()
-        # df['NaNs'] = ['NaN'] * len(time)
 
         proteins = [meta['protein']]
-        # lipid = meta['lipid']
-        # residue = meta['residue']
-        # headgroup = meta['headgroup']
-        # cutoff = meta['cutoff']
-        # residue_atom = meta['residue_atom']
-        # # column_count = meta['column_count']
         protein_id = meta['protein_id']
         protein_id = [str(x) for x in protein_id]
         min_val = meta['min_val']
@@ -70,27 +57,13 @@ def show_distances(distances, norm_factor=1000000):
             source_dict[i] = []
         source_dict['x'] = []
 
-        # source_dict = {}
-        # for i in df.columns[1:]:
-        #     source_dict[i] = []
-        # source_dict['x'] = []
-
         source = ColumnDataSource(data=source_dict)
 
         protein_name = Select(title="Protein", value=proteins[0], options=proteins, width=100)
         pc = Select(title="protein_id", value=protein_id[0], options=protein_id, width=100)
         res = Select(title="Residue Selection", value=residues[0], options=residues, width=100)
 
-        # RESVALUE['first'] = str(residues[0])
-        # RESVALUE['second'] = str(residues[0])
-
-        # TOOLTIPS=[("Lipid Index", "@ResID")]
-
         p = figure(plot_width=1500, plot_height=400, tools='pan, box_zoom, ywheel_zoom, save, reset, help')
-
-        # for i in df.columns[1:]:
-        #     color = '#%02x%02x%02x' % tuple(np.random.choice(range(256), size=3))
-        #     p.line(x='x', y=i, line_color=color, source=source, line_width=2)
 
         for i in np.unique(columns):
             color = '#%02x%02x%02x' % tuple(np.random.choice(range(256), size=3))
@@ -111,19 +84,11 @@ def show_distances(distances, norm_factor=1000000):
         def update():
 
             df = distances[int(res.value)][0]
-            # df = df_og.copy()
-            # del df_og
-            # print (df.head())
-
-            # df['Time'] = df['Time'] / norm_factor
             time = df['Time'].to_list()
             df['NaNs'] = ['NaN'] * len(time)
 
             show_columns = [x for x in df.columns if x.startswith(pc.value + '_')]
             not_columns = [x for x in np.unique(columns) if x not in show_columns]
-
-            # print ("show_column len is: ", len(show_columns))
-            # print ("not_column len is: ", len(not_columns))
 
             new_source_dict = {}
             new_source_dict['x'] = df['Time']
@@ -134,8 +99,6 @@ def show_distances(distances, norm_factor=1000000):
                 new_source_dict[col] = df['NaNs']
 
             source.data = new_source_dict
-
-
 
 
         controls = [protein_name, pc, res]

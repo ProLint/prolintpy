@@ -120,76 +120,6 @@ class ComputeContacts(object):
 
         return dict(prolint_contacts)
 
-    # def compute_lipid_distances(self, t, protein, distances_dict, residue_atom=None, distance_co=0.7, percentile_co=0.05, n=None):
-
-    #     import itertools
-
-    #     lipid_residue_distances = {}
-    #     lipids = list(distances_dict.keys())
-
-    #     for lipid in lipids:
-    #         headgroup = martini_headgroups(lipid, False)[lipid]
-    #         for residue in distances_dict[lipid]:
-    #             residue_distances = {}
-    #             for prot_idx in range(protein.counter):
-    #                 indices = protein.get_indices([residue], copy=prot_idx, suppress=True)[0]
-
-    #                 df_res = protein.dataframe[prot_idx].loc[indices]
-    #                 if residue_atom is None:
-    #                     if protein.resolution == "martini":
-    #                         residue_atom = "BB"
-    #                     elif protein.resolution == "atomistic":
-    #                         residue_atom = "CA"
-
-    #                 bb = df_res[df_res.name == residue_atom].index.to_list()
-    #                 if len(bb) == 0:
-    #                     continue
-
-    #                 ldf = t.topology.to_dataframe()[0]
-    #                 if n is None:
-    #                     lipid_idxs = ldf[
-    #                         (ldf.name == headgroup) &
-    #                         (ldf.resName == lipid)
-    #                     ].index.to_list()
-
-    #                 else:
-    #                     lipid_idxs = []
-    #                     lipid_resIDs = n[protein.name][prot_idx][residue].lipids[lipid]
-    #                     if len(lipid_resIDs) == 0:
-    #                         continue
-    #                     for resid in lipid_resIDs:
-    #                         lipid_idx = ldf[
-    #                             (ldf.name == headgroup) &
-    #                             (ldf.resSeq == resid)
-    #                         ].index.to_list()[0]
-
-    #                         lipid_idxs.append(lipid_idx)
-
-    #                 d = md.compute_distances(t, list(itertools.product(bb, lipid_idxs)))
-
-    #                 dist_dict_values = {}
-    #                 dist_sum_list = []
-    #                 dist_label_list = []
-    #                 for dist in range(d.shape[1]):
-    #                     sort_array = d[:, dist].copy()
-    #                     sort_array.sort()
-    #                     max_allowed = sort_array[int(len(sort_array)*percentile_co)]
-
-    #                     if max_allowed < distance_co:
-    #                         dist_sum_list.append(sum(sort_array[-int(len(sort_array)*0.1):]))
-    #                         dist_label_list.append(lipid_idxs[dist])
-    #                         dist_dict_values[lipid_idxs[dist]] = d[:, dist]
-
-    #                 if len(dist_sum_list) != 0:
-    #                     strongest_binding_label = dist_label_list[np.argmin(dist_sum_list)]
-    #                     residue_distances[prot_idx] = dist_dict_values[strongest_binding_label]
-
-    #             if lipid_residue_distances.get(lipid):
-    #                 lipid_residue_distances[lipid][residue] = residue_distances
-    #             else:
-    #                 lipid_residue_distances[lipid] = {residue: residue_distances}
-
-    #     return lipid_residue_distances, dict(time=t.time, protein=[protein.name])
 
     def compute_lipid_distances(self, t, protein, distances_dict, PLASMA_LIPIDS, lipids_found, resolution="martini", p=False, grouped=True):
 
@@ -587,29 +517,6 @@ Indicate for which protein to calculate contacts using the 'protein' option.""")
     elif protein is None:
         protein = list(n.keys())[0]
 
-#     test_contact = n[protein][0][r].contacts
-#     if (len(test_contact.keys()) != 1) & (lipid is None):
-#             raise ValueError("""prolintpy.Contacts provided contains information for more than 1 lipid. \
-# Indicate for which lipid to calculate contacts using the 'lipid' option.""")
-#     elif lipid is None:
-#         lipid = list(test_contact.keys())[0]
-
-#     contact_data = defaultdict(list)
-#     for pc in n[protein].keys():
-#         if contacts == 'contacts':
-#             contact = n[protein][pc][r].contacts
-#         elif contacts == 'occupancy':
-#             contact = n[protein][pc][r].occupancy
-#         else:
-#             raise ValueError("Only contacts and occupancy are currently implemented.")
-
-#         for l, v in contact.items():
-#             if l != lipid:
-#                 continue
-#             contact_data[l].append(np.array(v))
-
-#     return np.concatenate(contact_data[lipid])
-
     def is_lipid_defined(c, lipid):
         if (len(c.keys()) != 1) & (lipid is None):
                 raise ValueError("""prolintpy.Contacts provided contains information for more than 1 lipid. \n
@@ -632,11 +539,6 @@ Indicate for which lipid to calculate contacts using the 'lipid' option.""")
     if isinstance(is_class, LPContacts):
         test_contact = n[protein][0][r].contacts
         lipid = is_lipid_defined(test_contact, lipid)
-#         if (len(test_contact.keys()) != 1) & (lipid is None):
-#                 raise ValueError("""prolintpy.Contacts provided contains information for more than 1 lipid. \n
-# Indicate for which lipid to calculate contacts using the 'lipid' option.""")
-#     elif lipid is None:
-#         lipid = list(test_contact.keys())[0]
 
         for pc in n[protein].keys():
             if contacts == 'contacts':
@@ -653,9 +555,6 @@ Indicate for which lipid to calculate contacts using the 'lipid' option.""")
 
     else:
         test_contact = n[protein][0][r]
-#         if (len(test_contact.keys()) != 1) & (lipid is None):
-#                 raise ValueError("""prolintpy.Contacts provided contains information for more than 1 lipid. \n
-# Indicate for which lipid to calculate contacts using the 'lipid' option.""")
 
         lipid = is_lipid_defined(test_contact, lipid)
 
@@ -802,3 +701,30 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
                         RESULTS['ResName'].append(resnames[res_idx])
 
     return pd.DataFrame(RESULTS).sort_values(['Protein', 'Lipids', 'ResID']).reset_index(drop=True)
+
+
+
+def retrieve_distances(protein_dataframe, group_lipids, resolution, lipids, top_nr=30):
+
+    if group_lipids and resolution == "martini":
+        SYSTEM_LIPIDS = pl.martini_lipids(lipids.lipid_names())
+    else:
+        SYSTEM_LIPIDS = {}
+        for lip in lipids.lipid_names():
+            SYSTEM_LIPIDS[lip] = [lip]
+
+            
+    distances_dict = {}
+    for protein in protein_dataframe.Protein.unique():
+        df = protein_dataframe[protein_dataframe.Protein == protein]
+        idx = df.Longest_Duration.sort_values(ascending=False)[:int(top_nr)].index
+        df = df[df.index.isin(idx)]
+        lipids_found = df.Lipids.unique()
+        for lipid in lipids_found:
+            if group_lipids:
+                for group in SYSTEM_LIPIDS[lipid]:
+                    distances_dict[group] = df[df.Lipids == lipid].ResID.to_list()
+            else:
+                distances_dict[lipid] = df[df.Lipids == lipid].ResID.to_list()
+                
+    return distances_dict, SYSTEM_LIPIDS, lipids_found
