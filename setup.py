@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='prolint',
+    name='prolintpy',
     version='0.9.0',
-    description='Lipid-protein analysis',
+    description='Automated analyis and visualization of lipid-protein interactions.',
     author='Besian I. Sejdiu',
     license='MIT',
     python_requires='>=3.6',
