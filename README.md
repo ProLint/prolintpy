@@ -14,7 +14,9 @@
 
 prolintpy is a lightweight python library that is used by the ProLint webserver on the backend to analyze **Pro**tein-**L**ipid **int**eractions.. Use this tool if you want to customize analysis and visualization of lipid-protein interactions and want to scale-up your workflow beyond the capabilities of the <a href="https://prolint.ca" target="_blank">ProLint webserver</a>. 
 
-To get familiar with **prolintpy** please read the <a href="https://prolint.github.io/prolintpy" target="_blank">Documentation</a>. 
+To get familiar with **prolintpy** please read the <a href="https://prolint.github.io/prolintpy" target="_blank">Documentation</a>. You can also launch the binders: 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ProLint/tutorials/main) and test **prolintpy** without having to install it. 
+We provide several tutorials in the form of these binders that you can complete in your browser. Please note, however, that these tutorials are still work in progres and we will improve them during the coming days. 
 
 ## Installation 
 
