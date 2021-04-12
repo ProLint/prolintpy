@@ -16,7 +16,7 @@ prolintpy is a lightweight python library that is used by the ProLint webserver 
 
 To get familiar with **prolintpy** please read the <a href="https://prolint.github.io/prolintpy" target="_blank">Documentation</a>. You can also launch the binders: 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ProLint/tutorials/main) and test **prolintpy** without having to install it. 
-We provide several tutorials in the form of these binders that you can complete in your browser. Please note, however, that these tutorials are still work in progres and we will improve them during the coming days. 
+We provide several tutorials in the form of these binders that you can complete in your browser. Please note, however, that these tutorials are still work in progres and we will improve them during the coming days. If you would like to download the tutorials they are located here: https://github.com/ProLint/tutorials
 
 ## Installation 
 
