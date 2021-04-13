@@ -12,8 +12,8 @@ TLDR: you can use `prolintpy` for the following:
 <ol>
 <li>Automatically generate a topology description of your system (no <span style="font-style: oblique;">tpr</span> file needed)</li>
 <li>Calculate contact-based metrics for lipid-protein interactions</li>
-<li>Calculate 2D and 3D densities</li>
-<li>Calculate physics-based properties</li>
+<li>Calculate 2D and 3D densities (in progress)</li>
+<li>Calculate physics-based properties (in progress)</li>
 <li>Interactively visualize lipid-protein interactions</li>
 </ol>
 
