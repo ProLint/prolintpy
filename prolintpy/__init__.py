@@ -8,6 +8,7 @@ from .vis.show_contact_projection import show_contact_projection
 from .vis.show_distances import show_distances
 from .vis.show_radar import show_radar
 from .vis.show_metric_distances import show_metric_distances
+from .vis.show_density import show_density
 
 from .utils.martinilipids import lipid_species, martini_lipids, martini_headgroups
 from .utils.network import network

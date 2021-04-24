@@ -16,8 +16,7 @@ from bokeh.themes import Theme
 
 from prolintpy.utils.misc import unit_poly_verts, radar_patch, star_curv
 
-
-def show_radar(dataframe):
+def show_radar(df=None, filename=None):
     """Visualize lipid-protein contacts using a Bokeh radar map.
 
     This is useful if you want to (i) compare the binding profile of two residues and
@@ -26,17 +25,28 @@ def show_radar(dataframe):
     Parameters
     ----------
 
-    dataframe : pd.DataFrame
-         A contacts dataframe. This will be the output of pl.contacts_dataframe() command.
+    df : pd.DataFrame
+         A contacts df. This will be the output of pl.contacts_dataframe() command.
 
+    filename: string
+        A string pointing to the location of a csv file containing data that can be loaded into a pandas DataFrame.
 
     """
+    if df is None and not filename:
+        raise Exception("show_radar can take either a pandas DataFrame or a csv file that can be loaded into a pandas DataFrame.")
+    elif filename:
+        df = pd.read_csv(filename)
 
     output_notebook()
 
     def radarApp(doc):
 
-        df = dataframe
+        nonlocal df
+        df = df.copy()
+        for col in df.columns:
+            if col.endswith('Error'):
+                del df[col]
+
         gpcrs = list(df.Protein.unique())
         lipids = list(df.Lipids.unique())
         radius = list(df.Radius.unique())
@@ -93,6 +103,9 @@ def show_radar(dataframe):
 
 
         # num_vars = 6
+        # cols_to_display = [x for x in list(df.columns) if not x.endswith('Error')]
+        # num_vars = len(cols_to_display)
+
         num_vars = len(list(df.columns)[:-5])
         centre = 0.5
 

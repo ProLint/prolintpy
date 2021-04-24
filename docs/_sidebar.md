@@ -12,8 +12,10 @@
 
 - Using prolintpy
 
-  - [Usage](usage.md)
-  - [Examples](examples.md)
+  <!-- - [Usage](usage.md) -->
+
+  - [Usage Examples](examples.md)
+  - [Reading ProLint Files](prolint.md)
 
 - Ligand Interactions
   - [Ligand Interactions](ligands.md)
