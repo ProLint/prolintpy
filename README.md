@@ -50,6 +50,13 @@ If you are using Windows, the same thing mentioned above applies.
 
 ## Getting Started
 
+To import `prolintpy` in your code: 
+
+```python 
+# To improve performance of visualization apps, we load everything at once 
+# so initial import may take a few seconds to finish. 
+import prolintpy as pl
+```
 Please follow the instructions provided in the <a href="https://prolint.github.io/prolintpy" target="_blank">documentation</a> to get started. Note that, to use the visualization interface of prolintpy, 
 you should use JupyterLab. At the top of your notebook file, make sure to call the `output_notebook` function: 
 
