@@ -574,7 +574,7 @@ Indicate for which lipid to calculate contacts using the 'lipid' option.""")
 
 
 
-def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metrics=None, time_unit='us', rt=False, range_type='geo', norm=True):
+def contacts_dataframe(n, p, t, radius, resolution="martini", output_erros=False, co=0, custom_metrics=None, time_unit='us', rt=False, range_type='geo', norm=True):
     """Convert contact information into a DataFrame format. The function calculates
     several contact metrics for each residue of each unique protein in the system.
     Contact information for multiple copies of the same protein are averaged. The following
@@ -610,6 +610,16 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
         list containing protein information for the system.
 
     t : MDTraj.Trajectory
+
+    radius : float
+        the cutoff radius used when calculating contacts.
+
+    resolution: string
+        the resolution of the data. Default martini.
+
+    output_erros: bool
+        Calculate errors and output them in the dataframe? Default is False.
+        Currently, errors are only meaningfull if there are multiple proteins in the system.
 
     co : int
         Discard contacts shorter than co value. Useful when you want to discard contacts
@@ -668,8 +678,6 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
         # This should work for any ff supported by mdtraj not just cg.
         df = p[prot_idx].dataframe[0]
         resnames = df[df.name == ref_atom].resName.to_numpy()
-        # res_indices = df['resSeq'].drop_duplicates().index
-        # resnames = df.iloc[res_indices].resName.to_numpy()
 
         for res_idx, residue in enumerate(residues):
             for k, v in metrics.items():
@@ -693,6 +701,8 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
 
                 for lipid, values in result.items():
                     RESULTS[v].append(values[0])
+                    if output_erros:
+                        RESULTS[v + '_Error'].append(values[1])
                     if k == list(metrics.keys())[-1]:
                         RESULTS["Protein"].append(protein)
                         RESULTS["Lipids"].append(lipid)
@@ -707,13 +717,13 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", co=0, custom_metri
 def retrieve_distances(protein_dataframe, group_lipids, resolution, lipids, top_nr=30):
 
     if group_lipids and resolution == "martini":
-        SYSTEM_LIPIDS = pl.martini_lipids(lipids.lipid_names())
+        SYSTEM_LIPIDS = martini_lipids(lipids.lipid_names())
     else:
         SYSTEM_LIPIDS = {}
         for lip in lipids.lipid_names():
             SYSTEM_LIPIDS[lip] = [lip]
 
-            
+
     distances_dict = {}
     for protein in protein_dataframe.Protein.unique():
         df = protein_dataframe[protein_dataframe.Protein == protein]
@@ -726,5 +736,5 @@ def retrieve_distances(protein_dataframe, group_lipids, resolution, lipids, top_
                     distances_dict[group] = df[df.Lipids == lipid].ResID.to_list()
             else:
                 distances_dict[lipid] = df[df.Lipids == lipid].ResID.to_list()
-                
+
     return distances_dict, SYSTEM_LIPIDS, lipids_found

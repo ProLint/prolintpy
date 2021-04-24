@@ -3,11 +3,11 @@ import mdtraj as md
 import matplotlib as mpl
 from matplotlib.pyplot import cm
 
-# import nglview as nv
+import nglview as nv
 
 from prolintpy.utils.shift_range import shift_range
 
-def show_contact_projection(t, bf, protein, offset=1, ngl_repr='surface', cmap='Reds', only_backbone=True):
+def show_contact_projection(t, bf, protein=None, offset=1, ngl_repr='surface', cmap='Reds'):
     """Visualize lipid-protein contacts by mapping them onto the structure of the protein.
 
     Parameters
@@ -34,32 +34,22 @@ def show_contact_projection(t, bf, protein, offset=1, ngl_repr='surface', cmap='
 
     only_backbone : bool
         Display only the backbone atoms. Only True is currently supported. Default is True.
-
-
     """
 
-    df = protein.dataframe[0]
+    if protein:
+        first_frame = t[0]
+        df = protein.dataframe[0]
 
-    # only_backbone = True,
-    if only_backbone:
         if protein.resolution == "martini":
             indices = df[(df.name == "BB")].index.to_numpy()
         elif protein.resolution == "atomistic":
             indices = df[(df.name == "CA")].index.to_numpy()
+
     else:
+        df = t.topology.to_dataframe()[0]
         indices = df.index.to_numpy()
 
-        ind_array = protein.get_indices()
-        b = []
-        for i, bfac in enumerate(bf):
-            for rep in ind_array[i]:
-                b.append(bfac)
-
-        bf = b
-
-
     t_slice = t[0].atom_slice(indices)
-
 
     bf_cmap = cm.get_cmap(cmap)
 

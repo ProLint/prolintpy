@@ -7,8 +7,8 @@ we call it a contact. Our goal, thus, is to measure these contacts, keep track o
 The main challenge here lies in distinguishing highly interacting lipids from other, transiently-interacting, ones. `prolintpy` provides
 an intuitive API to calculate such contact-based metrics.
 
-
 ### Features
+
 When calculating contact-based metrics, `prolintpy` supports the following features:
 
 <ol>
@@ -22,6 +22,7 @@ When calculating contact-based metrics, `prolintpy` supports the following featu
 The exact value of the threshold is irrelevant and `prolintpy` gives you the option to provide whatever value.
 
 ### Contact Calculation
+
 The contact interface of `prolintpy` is very intuitive. It uses the lipid and protein topologies as inputs, with many options available
 to customize. We first define a contacts object:
 
@@ -73,6 +74,7 @@ c = contacts.compute_neighbors(t, [45])
 print (c)
 > {'Protein0': {0: {45: <prolintpy.LPContacts for residue 45>}}}
 ```
+
 The innermost dictionary shows a contact object for the input residue (here 45). There is a similar object for each protein copy in the system (here 0).
 All copies are grouped according to their protein name (here Protein0). Getting the contacts out of the dictionary boils down to providing the appropriate
 keys:
@@ -90,7 +92,6 @@ ProLint also implements several helper functions to aid in getting these contact
 pl.retrieve_contacts(c, 45)
 pl.retrieve_contacts_flat(c, 45)
 ```
-
 
 ### Contacts DataFrame
 
@@ -119,20 +120,24 @@ for radius in radii:
         df = df.append(pl.contacts_dataframe(result, proteins, t, radius, resolution))
 ```
 
+To retrieve the errors for the calculated metrics, all you have to do is indicate that by setting the `output_erros` argument to `pl.contacts_dataframe()` to `True`.
+The resulting DataFrame structure will automatically be populated with the corresponding error values. Note, however, that currently error are only useful if your system
+contains multiple copies of the same protein. Otherwise, all errors will be zero.
+
 ### Definitions
+
 ProLint will calculate several contact metrics (e.g. average contact duration, occupancy, etc.). The following
 are the metrics supported by default:
 
-| Key         | Name                    | Description          |
-| ----------- | ------------------- --- | -------------------- |
-| `mean`      | Mean_Duration           | The average duration of all contacts|
-| `max`       | Longest_Duration        | The longest duration (averaged if more than 1 protein).|
-| `sum`       | Sum_of_all_Contacts     | The total sum of all contacts.|
-| `lnr`       | Lipid_Number            | The average number of lipids in contact (the total number of contacts normalized with respect to the number of frames).|
-| `nlnr`      | Normalized_Lipid_Number | Lipid_Number normalized with respect to the number of different lipids (e.g. number of different cholesterols).|
-| `occ`       | Occupancy               | For each frame, we give a value of 0 if no lipid of interest is in contact with the residue and 1 otherwise. <br>Occupancy is then: sum_of_all_1s / nr_of_frames.|
-| `rt`        | Residence_Time          | Residence Time (e.g. see <a href="https://www.pnas.org/content/117/14/7803">here</a> and <a href="https://pubs.acs.org/doi/abs/10.1021/ja310577u">here</a>. )|
-
+| Key    | Name                    | Description                                                                                                                                                       |
+| ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mean` | Mean_Duration           | The average duration of all contacts                                                                                                                              |
+| `max`  | Longest_Duration        | The longest duration (averaged if more than 1 protein).                                                                                                           |
+| `sum`  | Sum_of_all_Contacts     | The total sum of all contacts.                                                                                                                                    |
+| `lnr`  | Lipid_Number            | The average number of lipids in contact (the total number of contacts normalized with respect to the number of frames).                                           |
+| `nlnr` | Normalized_Lipid_Number | Lipid_Number normalized with respect to the number of different lipids (e.g. number of different cholesterols).                                                   |
+| `occ`  | Occupancy               | For each frame, we give a value of 0 if no lipid of interest is in contact with the residue and 1 otherwise. <br>Occupancy is then: sum_of_all_1s / nr_of_frames. |
+| `rt`   | Residence_Time          | Residence Time (e.g. see <a href="https://www.pnas.org/content/117/14/7803">here</a> and <a href="https://pubs.acs.org/doi/abs/10.1021/ja310577u">here</a>. )     |
 
 You can easily define your own custom metrics.
 We are planning on expanding the functionality of `prolintpy` with regards to contact-based metrics. So, your input/feedback is appreciated.

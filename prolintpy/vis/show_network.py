@@ -420,9 +420,10 @@ def show_network(filename, width=800, height=600):
 
     js_text = js_text_template.substitute({'python_data': json.dumps(network),
                                         'network': rand_str})
-    my_plot = html_template.substitute({'js_text': js_text})
+    network_plot = html_template.substitute({'js_text': js_text})
     d3_download = """ <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>"""
 
-    my_plot = d3_download + my_plot
+    network_plot = d3_download + network_plot
 
-    return HTML(my_plot)
+    HTML(network_plot)
+    return HTML(network_plot)

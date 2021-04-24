@@ -16,7 +16,7 @@ from bokeh.io import show, output_notebook
 
 from bokeh.themes import Theme
 
-def show_points(df, **kwargs):
+def show_points(df=None, filename=None, **kwargs):
     """Visualize lipid-protein contacts using a Bokeh scatter plot.
 
     Parameters
@@ -25,11 +25,17 @@ def show_points(df, **kwargs):
     df : pandas.DataFrame
         A contacts dataframe. This will be the output of pl.contacts_dataframe() command.
 
+    filename: string
+        A string pointing to the location of a csv file containing data that can be loaded into a pandas DataFrame.
+
     size : int
         The size of points to dispaly. Default is 10.
 
-
     """
+    if df is None and not filename:
+        raise Exception("show_points can take either a pandas DataFrame or a csv file that can be loaded into a pandas DataFrame.")
+    elif filename:
+        df = pd.read_csv(filename)
 
     output_notebook()
 
@@ -71,7 +77,6 @@ def show_points(df, **kwargs):
                             low=df[df.Protein == gpcr.value][y_axis.value].min(),
                             high=df[df.Protein == gpcr.value][y_axis.value].max())
 
-        # p = figure(plot_height=400, plot_width=800, title="", toolbar_location="right", tooltips=TOOLTIPS)
         p = figure(tooltips=TOOLTIPS,)
 
         global c
@@ -94,9 +99,6 @@ def show_points(df, **kwargs):
             ]
             if (residue.value != ""):
                 df = df[df.ResName.str.contains(residue.value.upper())==True]
-
-            # x_value = x_value
-            # y_value = y_value
 
             mapper = linear_cmap(field_name='y', palette=cc.palette[cmap.value],
                                 low=df[df.Protein == gpcr.value][y_value].min(),

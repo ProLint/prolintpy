@@ -13,11 +13,11 @@ lifting in the background. All visualization tools supported by `prolintpy` are 
 are intended to give users complete access to their data.
 
 Make sure you are using the JupyterLab environmet for this, and at the beginning execute:
+
 ```python
 from bokeh.io import output_notebook
 output_notebook()
 ```
-
 
 ### Point distribution
 
@@ -32,6 +32,11 @@ When runing in a JupyterLab environment, will give the following output applicat
 
 <img src="assets/images/points.png"></img>
 
+All of the provided tools (sliders, text boxes and select boxes) are intuitive and easy to understand. Importantly, the data that you
+visualize does not strictly have to have been calculated using prolintpy and you can use any other contacts you like. The app requires the presence
+of these columns: ResID, ResName, Protein, Lipids, Radius put at the end of the DataFrame.
+All are strings, except Radius which must contain be float values. If you have a different dataframe that you wish to visualize,
+either rename your columns to match the required names, or simply add placeholder value if you do not require them.
 
 ### Metric comparison
 
@@ -43,7 +48,6 @@ compare their interactions against each other. You can do this using ProLint by 
 ```python
 pl.show_radar(df)
 ```
-
 
 This will normalize all contact metrics (there should be at least three present) and use a radar plot
 for the visualization:
@@ -92,11 +96,10 @@ Given a list of input residues,
 this function will loop through all the lipids in the system and display distances with best ranking lipids. Ranking is decided
 based on the following parameters:
 
-| Argument       | Default       | Description          |
-| -------------- | ------------- | -------------------- |
-| distance_co    | 0.7           | A cutoff distance (nm) that a lipid must satisfy for `percentile_co` frames of the trajectory.|
-| percentile_co  | 0.05          | The percentage of the trajectory (measured in frames) that a lipid must be within the `distance_co` for it to be stored. |
-
+| Argument      | Default | Description                                                                                                              |
+| ------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| distance_co   | 0.7     | A cutoff distance (nm) that a lipid must satisfy for `percentile_co` frames of the trajectory.                           |
+| percentile_co | 0.05    | The percentage of the trajectory (measured in frames) that a lipid must be within the `distance_co` for it to be stored. |
 
 Here is an example application:
 
@@ -118,11 +121,17 @@ long duration of the trajectory and observe many lipid binding and unbinding eve
 NGL Viewer based application to visualize contact metrics as contact heatmaps that are projected on the
 surface of the protein. You visualize it in `prolintpy` using:
 
-    pl.show_contact_projection(t, df.Longest_Duration.to_list(), proteins[0])
+```python
+# depending on the size of the protein this may take a couple of seconds to render.
+# if you have multiple cutoffs then you also need to filter the dataframe using one value
+contact_values = df[df.Lipids == "CHOL"].Longest_Duration.to_list()
+pl.show_contact_projection(t, bf=contact_values, protein=proteins[0], cmap="Reds")
+```
 
 In the first argument we give information about the topology of the system, in the second we provide
-the contacts and in the third argument we tell `prolintpy` which protein to use. We can also use the
-`ngl_repr` argument to specify the structure representation. For example, if we use options like:
+the contacts and in the third argument we tell `prolintpy` which protein to use. The key here is that the
+size of `bf` has to match the number of residues in `protein`.
+We can also use the `ngl_repr` argument to specify the structure representation. For example, if we use options like:
 `surface`, `cartoon`, or `ball+stick` we get the following outputs:
 
 <img src="assets/images/projection.png"></img>
@@ -141,8 +150,9 @@ The width of the latter corresponds to the degree of the underlying interaction.
 lipid-protein interactions as a graph network you execute the following commands:
 
 ```python
-pl.network(lipids, df, df.columns[1], grouped=True, filename='network.json')
-pl.show_network('network.json')
+# df.columns[2] indicates which values we want to visualize
+pl.network(lipids, df, df.columns[2], grouped=True)
+pl.show_network('Protein0_Longest_Duration_0.5_network.json')  # may have to execute twice.
 ```
 
 In the first command, we store the interactions in a json file and then visualize them in the second
@@ -153,4 +163,24 @@ command. This will give an output like this:
 The size of lipid nodes corresponds to the ratio of that particular lipid group in simulated systems.
 The size of residue nodes corresponds to the relative content of each residue in the protein being shown.
 
+### Density Maps
 
+The positions visited during the simulation by lipids are bined using a 2D histogram and colored using a color map.
+This shows the preferential localization of lipids. This type of analysis depends on the protein being centered, which
+may have been fixed as part of the system setup or can be centered using other trajectory processing tools.
+ProLint allows you to calculate 2D densities using a very simple syntax:
+
+```python
+# Show the density of cholesterol and POPS lipids for a martini simulation:
+pl.show_density(t, ['CHOL', 'POPS'], "martini")
+```
+
+The command above will yieald a result like the following:
+
+<img src="assets/images/density_map.png"></img>
+
+There is a lipid selectbox to change the lipid being displayed and a colormap as well as Show Protein select box to change the
+type of color gradient used to visualize densities and show/hide the protein respectively. There are three sliders: to change the
+number of bins used when binning the data (the more bins the finer the resolution), a z-axis range that allows you to specify which
+range of the bilayer to use for the density calculation (e.g. only the upper leaflet), and a colorbar slider to hide values under
+a threshold.

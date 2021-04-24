@@ -5,11 +5,10 @@ from networkx.readwrite import json_graph
 
 from prolintpy.utils.shift_range import shift_range
 
-def network(l, df, metric, grouped, radius=None, filename='', webserver=False):
+def network(l, df, metric, grouped, radius=None, return_json=False):
     """Calculate network information.
 
-    ** The code has to be updated and improved **
-    ** Has not been tested extensively **
+    ** The code has to be updated and improved for stability and readability **
 
     Parameters
     ----------
@@ -30,8 +29,8 @@ def network(l, df, metric, grouped, radius=None, filename='', webserver=False):
         Cutoff radius used in measuring contacts. Useful when there's multiple
         cutoff radii.
 
-    filename : str
-        Name of the output file (in json format). E.g. network.json, etc.
+    return_json : bool
+        Return the results instead of saving them to a file.
 
     """
 
@@ -310,15 +309,13 @@ def network(l, df, metric, grouped, radius=None, filename='', webserver=False):
         graph_json = json_graph.node_link_data(graph_nx)
 
         collect_results.append((graph_json, gpcr))
-    return collect_results
-        # if webserver:
-        #     return (graph_json, gpcr)
 
-        # if filename == '':
-        #     file_name = os.path.join(gpcr + "_" + str(r) + '_network.json')
-        # else:
-        #     file_name = filename
+    if return_json:
+        return collect_results
 
-        # json.dump(graph_json, open(file_name, 'w'))
+    for result in collect_results:
+        graph_json, gpcr = result
+        file_name = os.path.join(gpcr + '_' + metric + "_" + str(r) + '_network.json')
+        json.dump(graph_json, open(file_name, 'w'))
 
-        # print("Done with " + gpcr)
+    return None
