@@ -56,6 +56,9 @@ contains information on all metrics, so we need to specify which one we want.
 
 ```python
 # load the data.json file and the pdb file
+import json
+import mdtraj as md
+
 T = md.load('Protein/girk_BB.pdb')
 with open('Protein/data.json') as fh:
     js = json.load(fh)
