@@ -27,12 +27,12 @@ python -m pip install prolintpy
 ```
 
 This should work on most systems.
-On Windows and even WSL 1, MDTraj may present a problem to install. In that case, you may want to use `conda` to 
-install MDTraj first: 
+If you encounter problems during installation, try the more verbose method below: 
 
 ```sh
 # create new environment
 conda create --name prolint python=3.7
+conda activate prolint
 conda install -c conda-forge mdtraj
 python -m pip install prolintpy
 ```
