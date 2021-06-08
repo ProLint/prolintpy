@@ -72,7 +72,7 @@ Follow the instruction provided <a href="https://github.com/nglviewer/nglview" t
 Before you load the data to prolintpy make sure to first remove water & ions beads. Leave only membrane and protein beads in the system. 
 
 ## Citation
-ProLint is research software. If you make use of it in work which you publish, please cite it. The BibTeX reference is
+prolintpy is research software. If you make use of it in work which you publish, please cite it. The BibTeX reference is
 
 ```
 @article{10.1093/nar/gkab409,
