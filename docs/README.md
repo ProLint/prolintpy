@@ -65,3 +65,20 @@ Follow the instruction provided <a href="https://github.com/nglviewer/nglview" t
 ## Data Files
 Before you load the data to prolintpy make sure to first remove water & ions beads. Leave only membrane and protein beads in the system.
 
+## Citation
+prolintpy is research software. If you make use of it in work which you publish, please cite it. The BibTeX reference is
+
+```
+@article{10.1093/nar/gkab409,
+    author = {Sejdiu, Besian I and Tieleman, D Peter},
+    title = "{ProLint: a web-based framework for the automated data analysis and visualization of lipid–protein interactions}",
+    journal = {Nucleic Acids Research},
+    year = {2021},
+    month = {05},
+    issn = {0305-1048},
+    doi = {10.1093/nar/gkab409},
+    url = {https://doi.org/10.1093/nar/gkab409},
+    note = {gkab409},
+    eprint = {https://academic.oup.com/nar/advance-article-pdf/doi/10.1093/nar/gkab409/38270894/gkab409.pdf},
+}
+```
