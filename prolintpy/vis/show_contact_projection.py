@@ -7,7 +7,7 @@ import nglview as nv
 
 from prolintpy.utils.shift_range import shift_range
 
-def show_contact_projection(t, bf, protein=None, offset=1, ngl_repr='surface', cmap='Reds'):
+def show_contact_projection(t, bf, protein=None, ngl_repr='surface', cmap='Reds'):
     """Visualize lipid-protein contacts by mapping them onto the structure of the protein.
 
     Parameters
@@ -20,10 +20,6 @@ def show_contact_projection(t, bf, protein=None, offset=1, ngl_repr='surface', c
 
     protein : ProLint.Protein
 
-    offset : int
-        Useful when the protein residue numbering does not start from 1.
-        Default is 1.
-
     ngl_repr: str
         One representation that will be used by nglview to display the protein. The following are supported
         options: 'point', 'line', 'rope', 'tube', 'trace', 'label', 'cartoon', 'licorice', 'ribbon',
@@ -32,8 +28,6 @@ def show_contact_projection(t, bf, protein=None, offset=1, ngl_repr='surface', c
     cmap : str
         One of matplotlib cmaps to be used to color contacts.
 
-    only_backbone : bool
-        Display only the backbone atoms. Only True is currently supported. Default is True.
     """
 
     if protein:
@@ -50,11 +44,13 @@ def show_contact_projection(t, bf, protein=None, offset=1, ngl_repr='surface', c
         indices = df.index.to_numpy()
 
     t_slice = t[0].atom_slice(indices)
+    resseq = df.resSeq.to_list()
 
     bf_cmap = cm.get_cmap(cmap)
 
     colors = [mpl.colors.to_hex(x) for x in bf_cmap(shift_range(bf))]
-    cs = [[y, str(x+offset)] for x, y in enumerate(colors)]
+    # cs = [[y, str(x+offset)] for x, y in enumerate(colors)]
+    cs = [[y, str(resseq[x])] for x, y in enumerate(colors)]
 
     scheme = nv.color._ColorScheme(cs, 'bf')
 
