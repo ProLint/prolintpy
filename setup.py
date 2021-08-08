@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='prolintpy',
-    version='0.9.2',
+    version='0.9.4',
     description='Automated analyis and visualization of lipid-protein interactions.',
     url="https://github.com/ProLint/prolintpy",
     author='Besian I. Sejdiu',
