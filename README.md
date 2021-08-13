@@ -23,6 +23,7 @@ We provide several tutorials in the form of these binders that you can complete 
 To install `prolintpy` simply execute: 
 
 ```sh
+# Python v3.6 or v3.7 supported. Python v3.8 may not work.
 python -m pip install prolintpy
 ```
 
