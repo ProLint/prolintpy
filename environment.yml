@@ -1,4 +1,4 @@
-name: del21
+name: prolint
 channels:
   - conda-forge
   - defaults
