@@ -7,7 +7,7 @@ import nglview as nv
 
 from prolintpy.utils.shift_range import shift_range
 
-def show_contact_projection(t, bf, protein=None, ngl_repr='surface', cmap='Reds'):
+def show_contact_projection(t, bf, protein=None, residue_list=None, ngl_repr='surface', cmap='Reds'):
     """Visualize lipid-protein contacts by mapping them onto the structure of the protein.
 
     Parameters
@@ -19,6 +19,9 @@ def show_contact_projection(t, bf, protein=None, ngl_repr='surface', cmap='Reds'
         List of contacts.
 
     protein : ProLint.Protein
+    
+    residue_list: list
+        List of residues. Required when working with a subset of residues. 
 
     ngl_repr: str
         One representation that will be used by nglview to display the protein. The following are supported
@@ -45,11 +48,33 @@ def show_contact_projection(t, bf, protein=None, ngl_repr='surface', cmap='Reds'
 
     t_slice = t[0].atom_slice(indices)
     resseq = df.resSeq.to_list()
+    
+    
+    atomic_bfactors = []
+    if residue_list is not None:
+        init, bfactors = 1, []
+        for idx, residue in enumerate(residue_list):
+            while init < residue:
+                bfactors.append(0)
+                init += 1
+            bfactors.append(bf[idx])
+            init += 1
+        dif = indices.size - len(bfactors)
+        for remaining_residues in range(dif):
+            bfactors.append(0)
+            
+        atomic_bfactors = []
+        for atom in resseq:
+                atomic_bfactors.append(bfactors[atom-1])
+    else:
+        if len(df.resSeq.unique()) != len(bf):
+            raise TypeError ('When projecting only a subset of residues provide a list of tuples: [(residue_id, value), ...]')
+        for atom in resseq:
+            atomic_bfactors.append(bf[atom-1])
 
     bf_cmap = cm.get_cmap(cmap)
 
-    colors = [mpl.colors.to_hex(x) for x in bf_cmap(shift_range(bf))]
-    # cs = [[y, str(x+offset)] for x, y in enumerate(colors)]
+    colors = [mpl.colors.to_hex(x) for x in bf_cmap(shift_range(atomic_bfactors))]
     cs = [[y, str(resseq[x])] for x, y in enumerate(colors)]
 
     scheme = nv.color._ColorScheme(cs, 'bf')
@@ -76,5 +101,4 @@ def show_contact_projection(t, bf, protein=None, ngl_repr='surface', cmap='Reds'
     view.set_representations(params[ngl_repr])
 
     return view
-
 
