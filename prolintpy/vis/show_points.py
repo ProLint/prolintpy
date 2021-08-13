@@ -77,7 +77,7 @@ def show_points(df=None, filename=None, **kwargs):
                             low=df[df.Protein == gpcr.value][y_axis.value].min(),
                             high=df[df.Protein == gpcr.value][y_axis.value].max())
 
-        p = figure(tooltips=TOOLTIPS,)
+        p = figure(plot_width=1100, plot_height=600, tooltips=TOOLTIPS,)
 
         global c
         c = p.circle(x="x", y="y", source=source, line_color='black', fill_color=mapper, **kwargs)
@@ -122,15 +122,13 @@ def show_points(df=None, filename=None, **kwargs):
         for control in controls:
             control.on_change('value', lambda attr, old, new: update(df))
 
-        sizing_mode = 'scale_width'
+        inputs = row(*controls)
+        inputs2 = row([gpcr, lipid, radius, residue])
+        inputs3 = row([number, x_axis, y_axis, cmap])
 
-        inputs = row(*controls, sizing_mode=sizing_mode)
-        inputs2 = row([gpcr, lipid, radius, residue], sizing_mode=sizing_mode)
-        inputs3 = row([number, x_axis, y_axis, cmap], sizing_mode=sizing_mode)
-
-        layout1 = layout([[inputs2]], sizing_mode=sizing_mode)
-        layout2 = layout([p], sizing_mode=sizing_mode)
-        layout3 = layout([inputs3], sizing_mode="scale_width")
+        layout1 = layout([[inputs2]])
+        layout2 = layout([p])
+        layout3 = layout([inputs3])
 
         update(df)
 
@@ -138,15 +136,5 @@ def show_points(df=None, filename=None, **kwargs):
         doc.add_root(layout2)
         doc.add_root(layout3)
         doc.title = "Scatter Application"
-        doc.theme = Theme(json=yaml.load("""
-            attrs:
-                Figure:
-                    toolbar_location: above
-                    height: 500
-                    width: 800
-                Grid:
-                    grid_line_dash: [6, 4]
-                    grid_line_color: black
-        """, Loader=yaml.FullLoader))
 
     return show(pointsApp)
