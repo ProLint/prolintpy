@@ -678,6 +678,7 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", output_erros=False
         # This should work for any ff supported by mdtraj not just cg.
         df = p[prot_idx].dataframe[0]
         resnames = df[df.name == ref_atom].resName.to_numpy()
+        selected_resnames = [resnames[x-1] for x in residues]
 
         for res_idx, residue in enumerate(residues):
             for k, v in metrics.items():
@@ -708,7 +709,7 @@ def contacts_dataframe(n, p, t, radius, resolution="martini", output_erros=False
                         RESULTS["Lipids"].append(lipid)
                         RESULTS["Radius"].append(float(radius))
                         RESULTS["ResID"].append(residue)
-                        RESULTS['ResName'].append(resnames[res_idx])
+                        RESULTS['ResName'].append(selected_resnames[res_idx])
 
     return pd.DataFrame(RESULTS).sort_values(['Protein', 'Lipids', 'ResID']).reset_index(drop=True)
 
