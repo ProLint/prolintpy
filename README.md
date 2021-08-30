@@ -28,26 +28,27 @@ python -m pip install prolintpy
 ```
 
 This should work on most systems.
-If you encounter problems during installation, try the more verbose method below: 
+If you encounter problems during installation, use one of the more verbose methods below: 
 
 ```sh
-# create new environment
+
+# Method 1
+git clone https://github.com/ProLint/prolintpy.git
+cd prolintpy
+conda env create -f environment.yml
+conda activate prolint
+
+# Method 2
+git clone https://github.com/ProLint/prolintpy.git
+cd prolintpy
+python setup.py install
+  
+# Method 3 (if MDTraj causes problems)
 conda create --name prolint python=3.7
 conda activate prolint
 conda install -c conda-forge mdtraj
 python -m pip install prolintpy
 ```
-
-### Installing from source
-If you want to install directly from the github repository then you can do that by typing: 
-
-```sh
-git clone https://github.com/ProLint/prolintpy.git
-cd prolintpy
-python setup.py install
-```
-
-If you are using Windows, the same thing mentioned above applies. 
 
 ## Getting Started
 
