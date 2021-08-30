@@ -129,4 +129,4 @@ dependencies:
     - websocket-client==1.1.1
     - widgetsnbextension==3.5.1
     - zipp==3.5.0
-    - prolintpy==0.9.5
+    - prolintpy==0.9.6
