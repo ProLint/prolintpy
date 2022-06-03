@@ -460,7 +460,7 @@ Indicate for which protein to calculate contacts using the 'protein' option.""")
 
     is_class = n[key1][key2][key3]
 
-    if isinstance(is_class, LPContacts):
+    if hasattr(is_class, contacts):
         for pc in n[protein].keys():
             if contacts == 'contacts':
                 contact = n[protein][pc][r].contacts
